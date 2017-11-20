@@ -18,30 +18,51 @@ public class App
         return this.thisScore;
     }
 
-    public void add(int i) {
+    public void add(int pins) {
 
-        this.roundScore[this.currentThrowTimes] = i;
+        this.roundScore[this.currentThrowTimes++] = pins;
+        this.thisScore += pins;
 
-        this.currentThrowTimes++;
-        this.thisScore += i;
+//        if(pins == 10)
+//        {
+//            this.currentThrowTimes++;
+//        }
+    }
 
+    public int getScoreForRound(int round) {
+        int ball = 0;
+        int tmpScore = 0;
+
+        for(int currentRound = 0; currentRound < round; currentRound++)
+        {
+            int firstThrow = roundScore[ball++];
+
+            //Strike
+            if(firstThrow == 10)
+            {
+                tmpScore += 10 + roundScore[ball] + roundScore[ball+1];
+            }
+            //Spare
+            else
+            {
+                int secondThrow = roundScore[ball++];
+                if(firstThrow + secondThrow == 10)
+                {
+                    tmpScore += 10 + roundScore[ball];
+                }
+                else
+                {
+                    tmpScore += firstThrow + secondThrow;
+                }
+
+            }
+
+        }
+
+        return tmpScore;
     }
 
     private int thisScore = 0;
     private int currentThrowTimes = 0;
     private int[] roundScore = new int[21];
-
-    public int getScoreForRound(int i) {
-        int ball = 0;
-        int tmpScore = 0;
-
-        for(int currentRound = 0; currentRound < i; currentRound++)
-        {
-            int firstThrow = roundScore[ball++];
-            int secondThrow = roundScore[ball++];
-            tmpScore += firstThrow + secondThrow;
-        }
-
-        return tmpScore;
-    }
 }

@@ -25,40 +25,66 @@ public class AppTest {
     }
 
     @Test
-    public void testScoreAfterOneThrow() throws Exception {
+    public void testScoreAfterOneRound() throws Exception {
 
         app.add(3);
-        app.add(7);
+        app.add(6);
 
-        assertEquals(10, app.getTotalScore());
+        assertEquals(9, app.getTotalScore());
 
     }
 
     @Test
-    public void testScoreAfterTwoThrow() throws Exception {
+    public void testScoreAfterTwoRound() throws Exception {
+
+        app.add(3);
+        app.add(6);
+        app.add(2);
+        app.add(5);
+
+        assertEquals(16, app.getTotalScore());
+
+    }
+
+    @Test
+    public void testRoundScoreAfterTwoRound() throws Exception {
+
+        app.add(3);
+        app.add(6);
+        app.add(2);
+        app.add(5);
+        assertEquals(16, app.getTotalScore());
+        assertEquals(9, app.getScoreForRound(1));
+        assertEquals(16, app.getScoreForRound(2));
+
+    }
+
+    @Test
+    public void testSpareAfterOneRound() throws Exception {
 
         app.add(3);
         app.add(7);
         app.add(2);
         app.add(5);
-
         assertEquals(17, app.getTotalScore());
+        assertEquals(12, app.getScoreForRound(1));
+        assertEquals(19, app.getScoreForRound(2));
 
     }
 
     @Test
-    public void testRoundScoreAfterTwoThrow() throws Exception {
+    public void testStrikeAfterOneRound() throws Exception {
 
-        app.add(3);
+        app.add(10);
         app.add(7);
-        app.add(2);
+        app.add(3);
         app.add(5);
-        assertEquals(17, app.getTotalScore());
-        assertEquals(10, app.getScoreForRound(1));
-        assertEquals(17, app.getScoreForRound(2));
+        app.add(3);
+        //assertEquals(43, app.getTotalScore());
+        assertEquals(20, app.getScoreForRound(1));
+        assertEquals(35, app.getScoreForRound(2));
 
     }
-
 
 
     @After
