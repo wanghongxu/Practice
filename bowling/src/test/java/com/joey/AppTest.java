@@ -66,7 +66,7 @@ public class AppTest {
         app.add(7);
         app.add(2);
         app.add(5);
-        assertEquals(17, app.getTotalScore());
+        assertEquals(19, app.getTotalScore());
         assertEquals(12, app.getScoreForRound(1));
         assertEquals(19, app.getScoreForRound(2));
 
@@ -80,15 +80,22 @@ public class AppTest {
         app.add(3);
         app.add(5);
         app.add(3);
-        //assertEquals(43, app.getTotalScore());
+        assertEquals(43, app.getTotalScore());
         assertEquals(20, app.getScoreForRound(1));
         assertEquals(35, app.getScoreForRound(2));
 
     }
 
+    @Test
+    public void testTenRounds()
+    {
+        for(int i = 0; i< 21; i++)
+        {
+            app.add(2);
+        }
 
-    @After
-    public void tearDown() throws Exception {
+        assertEquals(42, app.getTotalScore());
+
     }
 
 }
