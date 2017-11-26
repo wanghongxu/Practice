@@ -89,12 +89,26 @@ public class AppTest {
     @Test
     public void testTenRounds()
     {
-        for(int i = 0; i< 21; i++)
+        for(int i = 0; i< 20; i++)
         {
             app.add(2);
         }
 
-        assertEquals(42, app.getTotalScore());
+        assertEquals(40, app.getTotalScore());
+
+    }
+    
+    @Test
+    public void testTenStrikeOneMiss()
+    {
+
+        for( int i=0; i<11; i++)
+        {
+            app.add(10);
+
+        }
+        app.add(9);
+        assertEquals(299, app.getTotalScore());
 
     }
 

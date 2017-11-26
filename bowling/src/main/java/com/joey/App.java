@@ -15,25 +15,36 @@ public class App
 
     public int getTotalScore() {
 
-        int currentRoundNum = getCurrentRound();
-
-        return getScoreForRound(currentRoundNum);
+        return getScoreForRound(getCurrentRound() - 1);
     }
 
     public void add(int pins) {
 
         this.throwedScore[this.currentThrowTimes++] = pins;
-        this.thisScore += pins;
 
-        if(pins == 10)
+        adjustCurrentRound(pins);
+    }
+
+    private void adjustCurrentRound(int pins)
+    {
+        if (firstThrow == true)
         {
-            this.currentThrowTimes++;
+            if (pins == 10)
+                currentRound++;
+            else
+                firstThrow = false;
         }
+        else
+        {
+            firstThrow = true;
+            currentRound++;
+        }
+        currentRound = Math.min(11, currentRound);
     }
 
     public int getCurrentRound()
     {
-        return this.currentThrowTimes / 2;
+        return this.currentRound;
     }
 
     public int getScoreForRound(int round) {
@@ -44,37 +55,36 @@ public class App
         {
             int firstThrow = throwedScore[ball++];
 
-            //Strike
+
             if(firstThrow == 10)
             {
-                tmpScore += 10 + throwedScore[++ball] + throwedScore[ball+1];
+                //Strike
+
+                tmpScore += 10 + throwedScore[ball] + throwedScore[ball+1];
             }
-            //Spare
             else
             {
                 int secondThrow = throwedScore[ball++];
-                if(firstThrow + secondThrow == 10)
+                int roundScore = firstThrow + secondThrow;
+                if(roundScore == 10)
                 {
-                    tmpScore += 10 + throwedScore[ball];
+                    tmpScore += roundScore + throwedScore[ball];
                 }
                 else
                 {
-                    tmpScore += firstThrow + secondThrow;
+                    tmpScore += roundScore;
                 }
 
             }
 
-        }
-
-        if(round == 10)
-        {
-            tmpScore += throwedScore[ball];
         }
 
         return tmpScore;
     }
 
     private int thisScore = 0;
+    private boolean firstThrow = true;
+    private int currentRound = 1;
     private int currentThrowTimes = 0;
     private int[] throwedScore = new int[21];
 }
